@@ -91,7 +91,6 @@
       <div class="cta">
         <a class="btn" id="downloadResume" href="Vishwas_Mane_Graphics_Resume.pdf" download>⬇ Download Resume</a>
         <a class="btn ghost" id="hireBtn" href="mailto:vishwasmane4@gmail.com?subject=Opportunity%20for%20Vishwas%20Mane">Hire Me</a>
-        <a class="btn ghost" id="scheduleBtn" href="https://calendly.com/your-link" target="_blank">Schedule Call</a>
         <button class="btn" id="themeToggle">🌙</button>
       </div>
     </div>
@@ -110,13 +109,13 @@
             <div class="chip">WebGL / Three.js</div>
             <div class="chip">CAD: OpenCascade</div>
             <div class="chip">HOOPS Exchange</div>
-            <div class="chip">Vulkan (intro)</div>
+            <div class="chip">Vulkan (basic)</div>
             <div class="chip">Embedded / Qt</div>
           </div>
         </div>
 
         <!-- 3D Viewer Demo Section -->
-        <div class="card" style="margin-top:16px">
+        <!-- <div class="card" style="margin-top:16px">
           <div style="display:flex;justify-content:space-between;align-items:center">
             <h3>3D Viewer — Live Demo</h3>
             <div style="font-size:13px;color:var(--muted)">Tip: drag to rotate • scroll to zoom</div>
@@ -132,10 +131,10 @@
             <input id="fileInput" type="file" accept=".gltf,.glb" style="display:none">
             <div style="margin-left:auto; color:var(--muted); font-size:13px">WebGL powered viewer (Three.js)</div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Projects / CTA -->
-        <div class="card" style="margin-top:16px">
+        <!-- <div class="card" style="margin-top:16px">
           <div style="display:flex;align-items:center;justify-content:space-between">
             <h3>Projects & Demos</h3>
             <div class="meta"><a class="btn ghost" href="#timeline">Experience Timeline</a></div>
@@ -155,7 +154,7 @@
               <p class="duration">Three.js based viewer for CAD exports</p>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Animated Timeline -->
         <div class="card" id="timeline" style="margin-top:16px">
@@ -195,6 +194,79 @@
         </div>
       </aside>
     </div>
+
+    <!-- WebGL Assignments Viewer: tree + iframe -->
+    <div class="card" style="margin-top:16px">
+      <h3>WebGL Demo's</h3>
+      <p style="margin-top:6px;color:var(--muted)">Select a demo from the tree below.</p>
+
+      <div style="display:flex; gap:12px; margin-top:12px; align-items:flex-start;">
+        <!-- Tree / dropdown -->
+        <div style="width:260px; max-height:360px; overflow:auto; background:var(--glass); padding:10px; border-radius:8px;">
+          <div style="font-weight:700; margin-bottom:8px">Assignments</div>
+          <ul id="demoTree" style="list-style:none; padding-left:8px; margin:0">
+            <!-- Sample entries (edit or replace) -->
+            <li><button class="btn ghost" data-path="demos/assignment1/index.html">Assignment 1 — Rotating Cube</button></li>
+            <li><button class="btn ghost" data-path="demos/assignment2/index.html">Assignment 2 — Terrain</button></li>
+            <li>
+              <details>
+                <summary style="cursor:pointer; font-weight:700; margin-top:8px">Archived</summary>
+                <ul style="list-style:none; padding-left:10px; margin-top:8px">
+                  <li><button class="btn ghost" data-path="demos/old_demo/index.html">Old Demo — Particles</button></li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+
+        </div>
+
+        <!-- iframe viewer -->
+        <div style="flex:1; min-width:220px; height:360px; border-radius:10px; overflow:hidden; box-shadow:0 8px 20px rgba(2,6,23,0.06)">
+          <iframe id="demoFrame" src="about:blank" style="width:100%; height:100%; border:0; background:white" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+        </div>
+      </div>
+
+      <div style="margin-top:12px; display:flex; gap:8px">
+        <a class="btn" id="openInNew" href="#" target="_blank">Open in new tab</a>
+        <button class="btn ghost" id="refreshDemo">Refresh Demo</button>
+      </div>
+
+    </div>
+
+    <script>
+      // WebGL Assignments viewer script
+      (function(){
+        const tree = document.getElementById('demoTree');
+        const frame = document.getElementById('demoFrame');
+        const openBtn = document.getElementById('openInNew');
+        const refreshBtn = document.getElementById('refreshDemo');
+
+        function setSrc(path){
+          // simple safety: only allow paths under demos/
+          if(!path || !path.startsWith('demos/')) return;
+          frame.src = path;
+          openBtn.href = path;
+        }
+
+        // attach click handlers to buttons inside tree
+        tree.querySelectorAll('button[data-path]').forEach(btn =>{
+          btn.addEventListener('click', ()=>{
+            const p = btn.getAttribute('data-path');
+            setSrc(p);
+            // highlight selected
+            tree.querySelectorAll('button').forEach(b=>b.style.border='');
+            btn.style.border='2px solid var(--accent)';
+          });
+        });
+
+        refreshBtn.addEventListener('click', ()=>{ frame.contentWindow.location.reload(); });
+
+        // Optional: auto-load first demo if exists
+        const first = tree.querySelector('button[data-path]');
+        if(first) first.click();
+
+      })();
+    </script>
 
     <footer>
       © 2025 Vishwas N. Mane — Built with WebGL demos & love for rendering.
