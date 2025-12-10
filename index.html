@@ -1,113 +1,319 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Vishwas N. Mane | Graphics & Rendering Engineer</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vishwas N. Mane — Graphics & Rendering Engineer</title>
+  <meta name="description" content="Portfolio / LinkedIn-style page for Vishwas N. Mane — Graphics, Rendering, OpenGL, C++" />
+
+  <!-- ====== Styles (light + dark mode via CSS variables) ====== -->
+  <style>
+    :root{
+      --bg: #f3f2ef;
+      --card:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --accent:#0a66c2;
+      --glass: rgba(255,255,255,0.6);
+    }
+    [data-theme="dark"]{
+      --bg:#0b0d10; --card:#0f1316; --text:#e6eef6; --muted:#aab3bd; --accent:#58a6ff; --glass: rgba(255,255,255,0.04);
+    }
+
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial; margin:0; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased}
+
+    .wrap{max-width:1100px; margin:28px auto; padding:20px}
+
+    /* Header */
+    .header{display:flex; gap:20px; align-items:center; background:var(--card); padding:18px; border-radius:12px; box-shadow:0 6px 18px rgba(2,6,23,0.06)}
+    .profile{width:120px; height:120px; border-radius:50%; overflow:hidden; border:4px solid var(--accent); flex:0 0 120px}
+    .profile img{width:100%; height:100%; object-fit:cover; display:block}
+    .title{flex:1}
+    .title h1{margin:0; font-size:22px; color:var(--accent)}
+    .title p{margin:6px 0 0; color:var(--muted)}
+
+    .cta{display:flex; gap:10px; margin-left:auto}
+    .btn{background:var(--accent); color:white; padding:10px 14px; border-radius:8px; text-decoration:none; font-weight:600}
+    .btn.ghost{background:transparent; color:var(--accent); border:1px solid var(--accent)}
+
+    /* layout */
+    .columns{display:grid; grid-template-columns: 1fr 360px; gap:18px; margin-top:18px}
+    .card{background:var(--card); padding:18px; border-radius:12px; box-shadow:0 6px 18px rgba(2,6,23,0.04)}
+
+    /* Skills */
+    .skills{display:flex; flex-wrap:wrap; gap:8px}
+    .chip{padding:8px 10px; border-radius:999px; background:var(--glass); color:var(--muted); font-weight:600}
+
+    /* 3D Viewer */
+    .viewer{height:360px; border-radius:10px; overflow:hidden; background:linear-gradient(180deg,var(--card),var(--glass)); display:flex; align-items:center; justify-content:center}
+    #three-canvas{width:100%; height:100%; display:block}
+
+    /* Timeline */
+    .timeline{position:relative; padding-left:18px}
+    .timeline::before{content:""; position:absolute; left:8px; top:0; bottom:0; width:3px; background:linear-gradient(180deg,var(--accent),transparent)}
+    .evt{position:relative; margin:20px 0; opacity:0; transform:translateY(18px); transition:all 600ms cubic-bezier(.2,.9,.3,1)}
+    .evt.visible{opacity:1; transform:none}
+    .dot{position:absolute; left:-18px; top:8px; width:14px; height:14px; border-radius:50%; background:var(--card); border:3px solid var(--accent)}
+    .evt h4{margin:0 0 6px}
+    .duration{font-size:13px; color:var(--muted)}
+
+    /* resume download & small details */
+    .meta{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+
+    /* Animated subtle hover for project cards */
+    .proj{transition:transform 240ms, box-shadow 240ms; border-radius:8px}
+    .proj:hover{transform:translateY(-6px); box-shadow:0 12px 28px rgba(2,6,23,0.12)}
+
+    /* footer */
+    footer{margin-top:20px; text-align:center; color:var(--muted); font-size:13px}
+
+    /* responsive */
+    @media (max-width:920px){.columns{grid-template-columns:1fr} .cta{margin-top:10px}}
+  </style>
+
+  <!-- include three.js from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+  <!-- GLTF loader (optional if user later loads glTF models) -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/GLTFLoader.js"></script>
 </head>
-
 <body>
+  <div class="wrap" id="page-root">
 
-<!-- HEADER -->
-<header class="header">
-    <img src="profile.jpg" class="profile-pic" alt="Profile Photo">
-    <h1>Vishwas N. Mane</h1>
-    <h2>Graphics / Rendering Engineer | C++ | OpenGL | GPU Programming</h2>
+    <div class="header">
+      <div class="profile"><img src="profile.jpg" alt="Vishwas Mane"></div>
+      <div class="title">
+        <h1>Vishwas N. Mane</h1>
+        <p>Graphics / Rendering Engineer • C++ • OpenGL • GPU Programming</p>
+        <div style="margin-top:8px;color:var(--muted)">📍 Pune, India • <a href="mailto:vishwasmane4@gmail.com">vishwasmane4@gmail.com</a> • +91 90114 28400</div>
+      </div>
 
-    <p class="location">📍 Pune, India |
-        <a href="mailto:vishwasmane4@gmail.com">vishwasmane4@gmail.com</a> |
-        <a href="tel:+919011428400">+91 90114 28400</a>
-    </p>
-
-    <a href="https://linkedin.com" class="btn">LinkedIn Profile</a>
-</header>
-
-<!-- ABOUT -->
-<section class="section">
-    <h3>About</h3>
-    <p>
-        Graphics & Rendering Engineer with 10+ years of experience building real-time 3D engines, CAD/CAM
-        systems, visualization tools, and GPU-accelerated features across automotive, engineering, and manufacturing.
-        Strong in C++, OpenGL, CAD geometry, and high-performance rendering pipelines.
-    </p>
-</section>
-
-<!-- SKILLS -->
-<section class="section">
-    <h3>Core Skills</h3>
-
-    <ul class="skills">
-        <li><b>Graphics:</b> OpenGL, OpenGL ES, WebGL, GLSL, PBR, Geometry Processing</li>
-        <li><b>CAD/CAM:</b> OpenCascade, HOOPS Exchange, STEP/IGES/CATIA/SolidWorks Import</li>
-        <li><b>Languages:</b> C++, C#, Delphi, Objective-C, Java, JavaScript, Python</li>
-        <li><b>Tools:</b> Qt, QNX, Docker, Jenkins, Git, Bitbucket, JIRA, Linux</li>
-        <li><b>Extra:</b> Vulkan, CUDA/OpenCL (academic)</li>
-    </ul>
-</section>
-
-<!-- EXPERIENCE -->
-<section class="section">
-    <h3>Professional Experience</h3>
-
-    <div class="job">
-        <h4>Technical Lead — People Tech Group</h4>
-        <span class="duration">2022 — Present | Hyderabad (WFH)</span>
-        <ul>
-            <li>Led 13+ engineers delivering rendering modules for GM infotainment/cluster systems.</li>
-            <li>Designed rendering engine components using OpenGL for multiple dashboards.</li>
-            <li>Developed GPU-driven 2D/3D gauges, seat adjustments UI, vehicle simulations.</li>
-            <li>Implemented embedded automotive cluster running on Raspberry Pi 4/5.</li>
-            <li>Created Dockerized build/test environments for deployment.</li>
-        </ul>
+      <div class="cta">
+        <a class="btn" id="downloadResume" href="Vishwas_Mane_Graphics_Resume.pdf" download>⬇ Download Resume</a>
+        <a class="btn ghost" id="hireBtn" href="mailto:vishwasmane4@gmail.com?subject=Opportunity%20for%20Vishwas%20Mane">Hire Me</a>
+        <a class="btn ghost" id="scheduleBtn" href="https://calendly.com/your-link" target="_blank">Schedule Call</a>
+        <button class="btn" id="themeToggle">🌙</button>
+      </div>
     </div>
 
-    <div class="job">
-        <h4>Technical Lead — Vaal Triangle / Sigmatek / Sandvik</h4>
-        <span class="duration">2018 — 2021 | Pune</span>
-        <ul>
-            <li>Owned CAD Import Module enabling B-Rep, geometry & metadata import.</li>
-            <li>Integrated HOOPS Exchange increasing file compatibility & product adoption.</li>
-            <li>Developed NC Viewer using OpenGL for G/M code visualization.</li>
-        </ul>
+    <div class="columns">
+      <!-- LEFT: main content -->
+      <div>
+        <div class="card">
+          <h3>About</h3>
+          <p>Graphics & Rendering Engineer with 10+ years building real-time 3D engines, CAD/CAM systems, visualization tools and GPU-accelerated features across automotive and manufacturing domains. Strong in C++, OpenGL, GLSL, geometry processing and rendering pipelines.</p>
+
+          <h4 style="margin-top:14px">Core Skills</h4>
+          <div class="skills" style="margin-top:8px">
+            <div class="chip">C++</div>
+            <div class="chip">OpenGL / GLSL</div>
+            <div class="chip">WebGL / Three.js</div>
+            <div class="chip">CAD: OpenCascade</div>
+            <div class="chip">HOOPS Exchange</div>
+            <div class="chip">Vulkan (intro)</div>
+            <div class="chip">Embedded / Qt</div>
+          </div>
+        </div>
+
+        <!-- 3D Viewer Demo Section -->
+        <div class="card" style="margin-top:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h3>3D Viewer — Live Demo</h3>
+            <div style="font-size:13px;color:var(--muted)">Tip: drag to rotate • scroll to zoom</div>
+          </div>
+
+          <div class="viewer" id="viewer">
+            <canvas id="three-canvas"></canvas>
+          </div>
+
+          <div style="margin-top:12px; display:flex; gap:8px; align-items:center">
+            <button class="btn" id="loadCube">Load Demo Model</button>
+            <button class="btn ghost" id="loadGLTF">Load glTF (optional)</button>
+            <input id="fileInput" type="file" accept=".gltf,.glb" style="display:none">
+            <div style="margin-left:auto; color:var(--muted); font-size:13px">WebGL powered viewer (Three.js)</div>
+          </div>
+        </div>
+
+        <!-- Projects / CTA -->
+        <div class="card" style="margin-top:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <h3>Projects & Demos</h3>
+            <div class="meta"><a class="btn ghost" href="#timeline">Experience Timeline</a></div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-top:12px">
+            <div class="proj card" style="padding:12px">
+              <h4>Embedded Dashboard Renderer</h4>
+              <p class="duration">OpenGL, Qt, Raspberry Pi</p>
+            </div>
+            <div class="proj card" style="padding:12px">
+              <h4>NC Viewer & CAM tools</h4>
+              <p class="duration">G-Code visualizer, geometry import</p>
+            </div>
+            <div class="proj card" style="padding:12px">
+              <h4>WebGL 3D Export</h4>
+              <p class="duration">Three.js based viewer for CAD exports</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Animated Timeline -->
+        <div class="card" id="timeline" style="margin-top:16px">
+          <h3>Experience — Timeline</h3>
+          <div class="timeline" style="margin-top:12px">
+            <div class="evt" data-delay="0"><div class="dot"></div><h4>Technical Lead — People Tech Group</h4><div class="duration">Jan 2022 – Present • Hyderabad (WFH)</div><p>Led 13+ engineers and delivered rendering modules for automotive infotainment & clusters.</p></div>
+            <div class="evt" data-delay="120"><div class="dot"></div><h4>Technical Lead — Vaal Triangle / Sigmatek / Sandvik</h4><div class="duration">2018 – 2021 • Pune</div><p>Owned CAD import module, HOOPS integration and NC viewer features.</p></div>
+            <div class="evt" data-delay="240"><div class="dot"></div><h4>Software Engineer — Geometric Ltd. / HCL</h4><div class="duration">2015 – 2017 • Pune</div><p>Rendering features, 3D PDF generation and WebGL export.</p></div>
+            <div class="evt" data-delay="360"><div class="dot"></div><h4>Software Engineer — Aashai Technologies</h4><div class="duration">2013 – 2015 • Pune</div><p>Built from-scratch CAD app, 3D viewer and simulation POCs.</p></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: sidebar -->
+      <aside>
+        <div class="card">
+          <h3>Contact</h3>
+          <p style="margin:6px 0">Email: <a href="mailto:vishwasmane4@gmail.com">vishwasmane4@gmail.com</a></p>
+          <p>Phone: +91 90114 28400</p>
+          <div style="margin-top:10px">
+            <a class="btn" href="mailto:vishwasmane4@gmail.com?subject=Job%20Opportunity">Recruiter Email</a>
+          </div>
+
+          <h4 style="margin-top:14px">Quick Links</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <a class="btn ghost" href="https://linkedin.com/in/your-profile" target="_blank">LinkedIn</a>
+            <a class="btn ghost" href="https://github.com/your" target="_blank">GitHub</a>
+            <a class="btn ghost" href="Vishwas_Mane_Graphics_Resume.pdf" download>Download Resume</a>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>Availability</h3>
+          <p class="duration">Open to remote/contract roles in graphics, rendering and embedded systems.</p>
+          <div style="margin-top:10px"><a class="btn" href="mailto:vishwasmane4@gmail.com">Contact for Interview</a></div>
+        </div>
+      </aside>
     </div>
 
-    <div class="job">
-        <h4>Software Engineer — Geometric Ltd. / HCL</h4>
-        <span class="duration">2015 — 2017 | Pune</span>
-        <ul>
-            <li>Added rendering features: clipping, draft analysis, transparency, coloring.</li>
-            <li>Contributed to 3D PDF generation & CATIA drawing import.</li>
-            <li>Developed 3D HTML export using WebGL.</li>
-        </ul>
-    </div>
+    <footer>
+      © 2025 Vishwas N. Mane — Built with WebGL demos & love for rendering.
+    </footer>
 
-    <div class="job">
-        <h4>Software Engineer — Aashai Technologies Pvt Ltd</h4>
-        <span class="duration">2013 — 2015 | Pune</span>
-        <ul>
-            <li>Developed complete CAD application from scratch.</li>
-            <li>Built 3D Viewer, STL importer, bending simulation & dimensioning algorithm.</li>
-        </ul>
-    </div>
+  </div>
 
-</section>
+  <!-- ====== JavaScript: Viewer, Theme, Timeline animation, File load ====== -->
+  <script>
+    // Theme toggle with persistence
+    (function(){
+      const root = document.documentElement;
+      const themeToggle = document.getElementById('themeToggle');
+      const saved = localStorage.getItem('theme');
+      if(saved === 'dark') document.documentElement.setAttribute('data-theme','dark');
+      function update(){
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        themeToggle.textContent = isDark? '☀️' : '🌙';
+      }
+      themeToggle.addEventListener('click', ()=>{
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark'? null : 'dark';
+        if(next) document.documentElement.setAttribute('data-theme','dark'); else document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', next? 'dark' : 'light');
+        update();
+      });
+      update();
+    })();
 
-<!-- CERTIFICATIONS -->
-<section class="section">
-    <h3>Certifications</h3>
-    <p><b>Real-Time Rendering — Astromedicomp, Pune</b> (GPA: 9.5/10)</p>
-</section>
+    // Timeline reveal using IntersectionObserver
+    (function(){
+      const evts = document.querySelectorAll('.evt');
+      const io = new IntersectionObserver(entries =>{
+        for(const e of entries){
+          if(e.isIntersecting){
+            const el = e.target; const delay = parseInt(el.getAttribute('data-delay')||0);
+            setTimeout(()=>el.classList.add('visible'), delay);
+            io.unobserve(el);
+          }
+        }
+      }, {threshold:0.12});
+      evts.forEach(e=>io.observe(e));
+    })();
 
-<!-- INTERESTS -->
-<section class="section">
-    <h3>Interests</h3>
-    <p>Cricket, Movies, Science & Engineering</p>
-</section>
+    // Simple Three.js viewer: rotating demo cube and basic controls
+    (function(){
+      const canvas = document.getElementById('three-canvas');
+      const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45,1,0.1,1000);
+      camera.position.set(0,1.2,3);
+      const light = new THREE.DirectionalLight(0xffffff, 1);
+      light.position.set(5,10,7);
+      scene.add(light);
+      scene.add(new THREE.AmbientLight(0xffffff,0.3));
 
-<footer class="footer">
-    © 2025 Vishwas N. Mane | Portfolio Website
-</footer>
+      // demo geometry (replace with GLTFLoader to load models)
+      let mesh;
+      function makeDemo(){
+        const geo = new THREE.IcosahedronGeometry(0.9,1);
+        const mat = new THREE.MeshStandardMaterial({metalness:0.35,roughness:0.3});
+        mesh = new THREE.Mesh(geo, mat);
+        scene.add(mesh);
+      }
+      makeDemo();
 
+      // resize
+      function onResize(){
+        const rect = canvas.getBoundingClientRect();
+        renderer.setSize(rect.width, rect.height, false);
+        camera.aspect = rect.width / rect.height;
+        camera.updateProjectionMatrix();
+      }
+      const ro = new ResizeObserver(onResize);
+      ro.observe(canvas);
+
+      // orbit-like controls (simple)
+      let isDown=false, lastX=0, lastY=0, rotX=0, rotY=0, distance=3;
+      canvas.addEventListener('pointerdown', e=>{isDown=true; lastX=e.clientX; lastY=e.clientY; canvas.setPointerCapture(e.pointerId)});
+      canvas.addEventListener('pointerup', e=>{isDown=false;});
+      canvas.addEventListener('pointermove', e=>{ if(!isDown) return; const dx=(e.clientX-lastX)/200; const dy=(e.clientY-lastY)/200; lastX=e.clientX; lastY=e.clientY; rotY += dx; rotX += dy; });
+      canvas.addEventListener('wheel', e=>{ e.preventDefault(); distance = Math.min(8, Math.max(1.2, distance + e.deltaY*0.002)); });
+
+      function animate(t){
+        requestAnimationFrame(animate);
+        if(mesh){ mesh.rotation.y += 0.006; mesh.rotation.x = rotX; mesh.rotation.y += rotY*0.02; }
+        // update camera
+        camera.position.set(Math.sin(Date.now()*0.0006)*distance, 1.2, Math.cos(Date.now()*0.0006)*distance);
+        camera.lookAt(0,0,0);
+        renderer.render(scene,camera);
+      }
+      animate();
+
+      // UI: load demo and GLTF
+      document.getElementById('loadCube').addEventListener('click', ()=>{
+        if(mesh) scene.remove(mesh); makeDemo();
+      });
+      const fileInput = document.getElementById('fileInput');
+      document.getElementById('loadGLTF').addEventListener('click', ()=> fileInput.click());
+      fileInput.addEventListener('change', ev=>{
+        const file = ev.target.files[0]; if(!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e){
+          const contents = e.target.result;
+          // load arraybuffer or text using GLTFLoader
+          const loader = new THREE.GLTFLoader();
+          if(mesh) scene.remove(mesh);
+          loader.parse(contents, '', function(gltf){ scene.add(gltf.scene); }, function(err){ alert('Failed to load model'); });
+        };
+        if(file.name.endsWith('.glb')) reader.readAsArrayBuffer(file); else reader.readAsText(file);
+      });
+
+    })();
+
+    // Small UX: make resume download button visible / accessible
+    (function(){
+      const dl = document.getElementById('downloadResume');
+      // if PDF isn't present in repo, user should add it and optionally rename; nothing else to do here.
+    })();
+  </script>
 </body>
 </html>
