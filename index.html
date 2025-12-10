@@ -1,43 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Vishwas Mane - Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body { font-family: Arial; max-width: 800px; margin: auto; padding: 20px; }
-    h1 { color: #0077B5; }
-    .section { margin-top: 30px; }
-    .btn { background:#0077B5; color:white; padding:10px 20px; text-decoration:none; border-radius:6px; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Vishwas N. Mane | Graphics & Rendering Engineer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1>Vishwas Mane</h1>
-<p>sotware Development, Team Lead • C++, OpenGL, OpenGL ES, C#, Vulkan • Pune, India.</p>
+<!-- HEADER -->
+<header class="header">
+    <img src="profile.jpg" class="profile-pic" alt="Profile Photo">
+    <h1>Vishwas N. Mane</h1>
+    <h2>Graphics / Rendering Engineer | C++ | OpenGL | GPU Programming</h2>
 
-<a class="btn" href="https://linkedin.com/in/your-profile" target="_blank">LinkedIn</a>
+    <p class="location">📍 Pune, India |
+        <a href="mailto:vishwasmane4@gmail.com">vishwasmane4@gmail.com</a> |
+        <a href="tel:+919011428400">+91 90114 28400</a>
+    </p>
 
-<div class="section">
-  <h2>About Me</h2>
-  <p>Software Developer with 10+ years of experience building real‑time 3D engines, CAD/CAM
-systems, visualization software, and GPU‑accelerated features across automotive, manufacturing, and
-engineering domains. Strong expertise in C++, OpenGL, OpenGL ES, WebGL, GLSL shader programming,
-geometry processing, CAD data handling, and rendering pipelines. Proven leadership in delivering
-complex rendering modules and leading teams for high‑priority projects.</p>
-</div>
+    <a href="https://linkedin.com" class="btn">LinkedIn Profile</a>
+</header>
 
-<div class="section">
-  <h2>Projects</h2>
-  <ul>
-    <li><b>Project 1:</b> Description</li>
-    <li><b>Project 2:</b> Description</li>
-  </ul>
-</div>
+<!-- ABOUT -->
+<section class="section">
+    <h3>About</h3>
+    <p>
+        Graphics & Rendering Engineer with 10+ years of experience building real-time 3D engines, CAD/CAM
+        systems, visualization tools, and GPU-accelerated features across automotive, engineering, and manufacturing.
+        Strong in C++, OpenGL, CAD geometry, and high-performance rendering pipelines.
+    </p>
+</section>
 
-<div class="section">
-  <h2>Contact</h2>
-  <p>Email:vishwasmane4@gmail.com</p>
-</div>
+<!-- SKILLS -->
+<section class="section">
+    <h3>Core Skills</h3>
+
+    <ul class="skills">
+        <li><b>Graphics:</b> OpenGL, OpenGL ES, WebGL, GLSL, PBR, Geometry Processing</li>
+        <li><b>CAD/CAM:</b> OpenCascade, HOOPS Exchange, STEP/IGES/CATIA/SolidWorks Import</li>
+        <li><b>Languages:</b> C++, C#, Delphi, Objective-C, Java, JavaScript, Python</li>
+        <li><b>Tools:</b> Qt, QNX, Docker, Jenkins, Git, Bitbucket, JIRA, Linux</li>
+        <li><b>Extra:</b> Vulkan, CUDA/OpenCL (academic)</li>
+    </ul>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section">
+    <h3>Professional Experience</h3>
+
+    <div class="job">
+        <h4>Technical Lead — People Tech Group</h4>
+        <span class="duration">2022 — Present | Hyderabad (WFH)</span>
+        <ul>
+            <li>Led 13+ engineers delivering rendering modules for GM infotainment/cluster systems.</li>
+            <li>Designed rendering engine components using OpenGL for multiple dashboards.</li>
+            <li>Developed GPU-driven 2D/3D gauges, seat adjustments UI, vehicle simulations.</li>
+            <li>Implemented embedded automotive cluster running on Raspberry Pi 4/5.</li>
+            <li>Created Dockerized build/test environments for deployment.</li>
+        </ul>
+    </div>
+
+    <div class="job">
+        <h4>Technical Lead — Vaal Triangle / Sigmatek / Sandvik</h4>
+        <span class="duration">2018 — 2021 | Pune</span>
+        <ul>
+            <li>Owned CAD Import Module enabling B-Rep, geometry & metadata import.</li>
+            <li>Integrated HOOPS Exchange increasing file compatibility & product adoption.</li>
+            <li>Developed NC Viewer using OpenGL for G/M code visualization.</li>
+        </ul>
+    </div>
+
+    <div class="job">
+        <h4>Software Engineer — Geometric Ltd. / HCL</h4>
+        <span class="duration">2015 — 2017 | Pune</span>
+        <ul>
+            <li>Added rendering features: clipping, draft analysis, transparency, coloring.</li>
+            <li>Contributed to 3D PDF generation & CATIA drawing import.</li>
+            <li>Developed 3D HTML export using WebGL.</li>
+        </ul>
+    </div>
+
+    <div class="job">
+        <h4>Software Engineer — Aashai Technologies Pvt Ltd</h4>
+        <span class="duration">2013 — 2015 | Pune</span>
+        <ul>
+            <li>Developed complete CAD application from scratch.</li>
+            <li>Built 3D Viewer, STL importer, bending simulation & dimensioning algorithm.</li>
+        </ul>
+    </div>
+
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="section">
+    <h3>Certifications</h3>
+    <p><b>Real-Time Rendering — Astromedicomp, Pune</b> (GPA: 9.5/10)</p>
+</section>
+
+<!-- INTERESTS -->
+<section class="section">
+    <h3>Interests</h3>
+    <p>Cricket, Movies, Science & Engineering</p>
+</section>
+
+<footer class="footer">
+    © 2025 Vishwas N. Mane | Portfolio Website
+</footer>
 
 </body>
 </html>
